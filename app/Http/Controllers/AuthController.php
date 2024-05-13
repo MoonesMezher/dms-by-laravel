@@ -7,6 +7,14 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function index() {
+        $users = User::all();
+
+        return response()->json([
+            'status' => 'success',
+            'users' => $users
+        ]);
+    }
 
     public function login(Request $request)
     {
