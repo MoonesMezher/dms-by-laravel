@@ -19,7 +19,7 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'bio'
+        'bio',
     ];
 
     /**
@@ -62,10 +62,10 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function comments() {
-        return $this->morphMany('comments', 'commentable', 'user_id');
+        return $this->morphMany(Comment::class, 'commentable', 'user_id');
     }
 
     public function documents() {
-        return $this->hasMany('documents');
+        return $this->hasMany(Document::class);
     }
 }

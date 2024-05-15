@@ -24,7 +24,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout')->middleware('auth:api');
     Route::post('refresh', 'refresh')->middleware('auth:api');
     Route::get('profile', 'profile')->middleware('auth:api');
-    Route::put('update', 'update')->middleware('auth:api');
+    Route::put('profile', 'update')->middleware('auth:api');
 });
 
 Route::controller(DocumentController::class)->group(function () {
@@ -38,7 +38,8 @@ Route::controller(DocumentController::class)->group(function () {
 
 Route::controller(CommentController::class)->group(function () {
     Route::get('comments', 'index');
-    Route::post('comments', 'store')->middleware(['auth:api', 'commented']);
+    Route::post('comments/user/{id}', 'userStore')->middleware('auth:api');
+    Route::post('comments/document/{id}', 'documentStore')->middleware('auth:api');
     Route::get('comments/{id}', 'show');
     Route::put('comments/{id}', 'update')->middleware(['auth:api', 'commented']);
     Route::delete('comments/{id}', 'destroy')->middleware(['auth:api', 'commented']);

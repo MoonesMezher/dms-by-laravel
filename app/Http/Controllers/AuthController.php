@@ -1,5 +1,7 @@
 <?php
 namespace App\Http\Controllers;
+
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -8,7 +10,7 @@ use App\Models\User;
 class AuthController extends Controller
 {
     public function index() {
-        $users = User::all();
+        $users = User::with('comments')->get();
 
         return response()->json([
             'status' => 'success',
@@ -100,9 +102,9 @@ class AuthController extends Controller
         ]);
     }
 
-    public function update($request) {
+    public function update(Request $request) {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'sometimes|string|max:255',
             'password' => 'sometimes|string|min:6',
             'bio' => 'sometimes|string|max:255'
         ]);
